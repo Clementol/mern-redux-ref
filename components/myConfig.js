@@ -1,3 +1,3 @@
 module.exports = {
-    siteUrl: 'http://localhost:3000'
+    siteUrl: 'https://mern-redux-ref.vercel.app'
 }
