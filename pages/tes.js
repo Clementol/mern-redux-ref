@@ -5,7 +5,7 @@ const Test = ({items}) => {
     console.log(items)
     return (
         <div>
-            Test mod
+            Test mode
         </div>
     )
 }
