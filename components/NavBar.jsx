@@ -1,6 +1,15 @@
 import Link from 'next/link'
+// import Logout from './auth/logout'
+import { useSelector } from 'react-redux'
+import AuthLink from './auth/authLink'
+import GuestLink from './guestLink'
+
+
 
 const NavBar = () => {
+
+    const {isAuthenticated} = useSelector( state => state.auth )
+
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
         <Link href="/">
@@ -11,12 +20,11 @@ const NavBar = () => {
         </button>
       
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item ">
-              <Link href="/categories">
-                <a className="nav-link" >Categories</a>
-              </Link>
-            </li>
+            {
+              isAuthenticated ?  <AuthLink />  :  GuestLink
+            }
            
           </ul>
          

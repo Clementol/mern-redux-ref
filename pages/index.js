@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-unfetch'
 import ShoppingList from '../components/shoppingList'
 
- function Home({props}) {
-    console.log(props)
+ function Home() {
+    
   return (
         <div className="container">
           <ShoppingList />

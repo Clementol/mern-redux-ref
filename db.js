@@ -8,5 +8,7 @@ export default async () => {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-  });
+  }).then( () => console.log('connected to database') )
+  .catch(err => console.log(`err => ${err}`))
+  
 };
