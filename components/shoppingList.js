@@ -1,4 +1,4 @@
- import React, {Component, useEffect} from 'react' ;
+ import React, {Component, useEffect, useState} from 'react' ;
 import {useSelector, useDispatch} from 'react-redux'
 import PropTypes from 'prop-types'
 import BeatLoader from 'react-spinners/BeatLoader'
@@ -55,19 +55,23 @@ export const Alert = ({item_msg}) => {
  * @description ShoppingList
 */
 const ShoppingList = () => {
-    const {loading, items, item_msg} = useSelector(state => state.item)
+    const [err_msg, setMsg] = useState('')
+
+    const {loading, items, item_msg} = useSelector(state => state.item);
+    const {isAuthenticated} = useSelector(state => state.auth)
     const dispatch = useDispatch()
     
     useEffect(() => {
-        dispatch(getItems())
+        item_msg ? setMsg(item_msg) : null
+        dispatch(getItems());
         dispatch(clearErrors())
-    }, [])
+    }, [item_msg])
 
         return (
             <div className="container">
                 <ItemModal />
                 {
-                    item_msg ? <Alert item_msg={item_msg} /> : null
+                    err_msg ? <Alert item_msg={err_msg} /> : null
                 }
                        
                 {

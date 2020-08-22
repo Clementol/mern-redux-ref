@@ -58,8 +58,12 @@ export default handler
 
                        
                     } )
+                    
             })
         })
+    })
+    .catch(e => {
+        res.status(400).end(JSON.stringify(`Unable to register: ${e}`))
     })
 })
 

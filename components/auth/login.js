@@ -29,6 +29,7 @@ const Login = () => {
     
 
     useEffect( () => {
+        setMsg('')
         //if (error !== prevError) {
             if ( error.id === 'LOGIN_FAIL') {
                 setMsg(error.msg)
@@ -61,6 +62,7 @@ const Login = () => {
          
         // loading button
         setLoadButton(true)
+        setMsg('');
     }
 
     return (
@@ -95,9 +97,9 @@ const Login = () => {
             <div className="form-group row" style={{margin: '3rem'}}>
                 <button className="btn btn-primary">
                     { loadButton === true &&
-                        <i className="fa fa-spinner fa-spin"></i>  
+                        <span><i className="fa fa-spinner fa-spin"></i> &nbsp; </span> 
                     
-                    } &nbsp; Login</button>
+                    } Login</button>
             </div>
 
         </form>

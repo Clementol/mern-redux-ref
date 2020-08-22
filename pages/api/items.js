@@ -1,6 +1,7 @@
 import{ default as connectToDb} from '../../db';
 import {Item} from '../../models/item.model'
 import handler from '../../handler';
+// const auth =  require('../../middleware/auth')
 
 /**
  * @description get all items

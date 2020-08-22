@@ -6,7 +6,7 @@ const auth = (req, res, next) =>{
     const token  = req.headers['x-auth-token'];
     console.log(token)
     //Check for token
-    if (!token) return res.status(401).end(JSON.stringify('Authorization denied'))
+    if (!token) return res.status(400).end(JSON.stringify('Authorization denied'))
 
 
 

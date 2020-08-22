@@ -1,21 +1,23 @@
- import  App from 'next/app';
- import {renderToString} from 'react-dom/server'
+import {useEffect} from 'react'
+import {Provider, useSelector} from 'react-redux'
 import {createWrapper} from 'next-redux-wrapper'
 import Layout from '../components/Layout';
 
 // import '../css/style.css'
 
-import {Provider} from 'react-redux'
+
 import {store, persistor} from '../components/store';
 
 import { PersistGate } from 'redux-persist/integration/react';
+import { loadUser } from '../components/actions/authActions';
 
 // import client from '../utils/apollo';
 
 function MyApp({ Component, pageProps }) {
-    // useEffect( () => {
-    //     store.dispatch(loadUser())
-    // }, [] )
+    const {isAuthenticated} = useSelector(state => state.auth)
+    useEffect( () => {
+        isAuthenticated ? store.dispatch(loadUser()) : null
+    }, [isAuthenticated] )
     return (
         <Provider store={store}>
             <PersistGate persistor={persistor} loading={null}>

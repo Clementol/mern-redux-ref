@@ -9,30 +9,31 @@ const Register = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [msg, setMsg] = useState(null)
+    const [err_msg, setErrMsg] = useState('')
     
     const dispatch = useDispatch();
     
     
     const {isAuthenticated} = useSelector(state => state.auth)
-    const {item_msg} = useSelector(state => state.item)
-    const {error} = useSelector(state => state) ;
+    const {msg} = useSelector(state => state.error)
     const [loadButton, setLoadButton] = useState(false)
     
 
     useEffect( () => {
-        //if (isAuthenticated) {
-            if (item_msg) {
-                setMsg(item_msg)
-                setLoadButton(false)
+        setErrMsg('');
+            if (msg) {
+                setErrMsg(msg);
+                setLoadButton(false);
             } else {
-                setMsg(null)
+                setErrMsg(null)
             }
-        //}
-        //if authenticated
+
+            if (isAuthenticated){
+                Router.push('/');
+           }
+           
         
-        
-    }, [isAuthenticated, item_msg] )     
+    }, [loadButton, msg, isAuthenticated] )     
    
 
     /**
@@ -41,7 +42,8 @@ const Register = () => {
      */
     const onsubmit =  (e) => {
         e.preventDefault();
-       
+        setLoadButton(true);
+        setErrMsg('')
         // New user info
         const newUser = {
             name,
@@ -51,15 +53,16 @@ const Register = () => {
 
         // perforM register
         dispatch(register(newUser))
-        setLoadButton(true)
+        
+        
         
     }
 
     return (
         <div style={{margin: "3rem"}} >
-            {msg ? 
+            {err_msg ? 
                 <div className="alert alert-danger" > 
-                {msg}
+                {err_msg}
                 </div> 
             : null
         }
@@ -100,10 +103,10 @@ const Register = () => {
 
             <div className="form-group row" style={{margin: '3rem'}}>
                 <button className="btn btn-primary">
-                { loadButton === true &&
-                        <i className="fa fa-spinner fa-spin"></i>  
+                { loadButton  && 
+                      <span> <i className="fa fa-spinner fa-spin"></i> &nbsp;</span>
                     
-                    } &nbsp; Register</button>
+                    } Register</button>
             </div>
 
         </form>

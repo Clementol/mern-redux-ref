@@ -2,15 +2,14 @@ import axios from 'axios';
 import {GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING, GET_ERRORS, 
 ITEM_ERROR, DELETE_ERROR
 } from './types';
-import { itemErrors } from './errorActions';
+
 import {tokenConfig} from './authActions'
-import {returnErrors} from './errorActions'
 
 
 const siteUrl = process.env.siteUrl
 
 /**
- * @description Get items form database
+ * @description Get items from database
 */
 
 export const getItems = () => dispatch => {
