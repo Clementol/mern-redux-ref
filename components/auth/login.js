@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../actions/authActions";
 import Router from 'next/router'
-import { Alert } from "../shoppingList";
+// import { Alert } from "../shoppingList";
+import { clearErrors } from "../actions/errorActions";
 
 
 // const Alert = ({msg}) => {
@@ -29,7 +30,8 @@ const Login = () => {
     
 
     useEffect( () => {
-        setMsg('')
+        //dispatch(clearErrors())
+
         //if (error !== prevError) {
             if ( error.id === 'LOGIN_FAIL') {
                 setMsg(error.msg)
@@ -67,9 +69,8 @@ const Login = () => {
 
     return (
         <div style={{margin: "3rem"}} >
-                {msg && <Alert item_msg={msg} /> 
-                
-                }
+                {msg && <div className="alert alert-danger" >{msg}</div> }
+
         <form onSubmit={onsubmit}>
 
             <div className="form-group row" >

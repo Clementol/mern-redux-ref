@@ -72,10 +72,10 @@ const ItemModal = () => {
         setMsg('');
         //if no name  don't close modal
         if (item_status === 400) {
-          setModal(false)
+          setModal(true)
         } else {
 
-          setModal(true)
+          setModal(false)
         }
 
         // set input to empty

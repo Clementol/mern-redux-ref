@@ -23,7 +23,7 @@ const NavBar = () => {
             
           <ul className="navbar-nav mr-auto">
             {
-              isAuthenticated ?  <AuthLink />  :  GuestLink
+              isAuthenticated ?  <AuthLink />  :  <GuestLink />
             }
            
           </ul>

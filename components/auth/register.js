@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../actions/authActions";
 import Router from 'next/router'
-
+import { clearErrors } from "../actions/errorActions";
 
 
 const Register = () => {
@@ -16,13 +16,14 @@ const Register = () => {
     
     const {isAuthenticated} = useSelector(state => state.auth)
     const {msg} = useSelector(state => state.error)
+    const {error} = useSelector(state => state)
     const [loadButton, setLoadButton] = useState(false)
     
-
+    
     useEffect( () => {
-        setErrMsg('');
-            if (msg) {
-                setErrMsg(msg);
+        
+            if (error.msg) {
+                setErrMsg(error.msg);
                 setLoadButton(false);
             } else {
                 setErrMsg(null)
@@ -32,8 +33,8 @@ const Register = () => {
                 Router.push('/');
            }
            
-        
-    }, [loadButton, msg, isAuthenticated] )     
+           //dispatch(clearErrors());
+    }, [error, isAuthenticated] )     
    
 
     /**
@@ -60,11 +61,11 @@ const Register = () => {
 
     return (
         <div style={{margin: "3rem"}} >
-            {err_msg ? 
+            {err_msg &&
                 <div className="alert alert-danger" > 
                 {err_msg}
                 </div> 
-            : null
+            
         }
         <form onSubmit={onsubmit}>
 
