@@ -5,6 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap'
 import Link from 'next/link';
 
+/**
+ * @param {*} msg 
+ */
+// const Alert = ({msg}) => {
+    
+//   return (
+//     <div className="alert alert-danger" >{msg}</div>
+//   )
+// }
+
 // Link to login page
 const LoginLink = (
     <h4>Please 
@@ -18,25 +28,28 @@ const LoginLink = (
 
 const ItemModal = () => {
 
-    const [state, setState] = useState({name: ''})
+    const [name, setName] = useState('')
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState('');
 
     const dispatch = useDispatch();
 
     // Reducers
-    const {isAuthenticated} = useSelector( state => state.auth )
-    const {item_msg, item_status} = useSelector( state => state.item )
+    const {isAuthenticated, user} = useSelector( state => state.auth )
+    const {add_item_msg, add_item_status} = useSelector( state => state.item )
 
     // Life cycle method
     useEffect( () => {
-      //if (isAuthenticated ===  true) {
-        if (item_status === 400) {
-            setMsg(item_msg)
-            
+    
+        if (add_item_status === 400) {
+            setMsg(add_item_msg)
+    
         }
-      //}
-      }, [ item_status, item_msg] )
+        if (add_item_status === 200) {
+            setModal(false)
+        }
+     
+      }, [add_item_msg, add_item_status] )
 
 
     
@@ -46,13 +59,15 @@ const ItemModal = () => {
     */
     const onChange = (event) => {
         event.preventDefault()
-        setState({ name: event.target.value})
+        setName( event.target.value)
     }
 
     // method to open and close modal
     const toggle = () => {
       setModal(!modal)
       setMsg('')
+      setName('')
+     
     }
     
     /**
@@ -61,26 +76,27 @@ const ItemModal = () => {
     */
     const onSubmit = e => {
         e.preventDefault();
-
-        // name of item to be added
+        setModal(true)
         const newItem = {
-          name: state.name
+          name: name
         }
-
         //Add Item to list
-        dispatch(addItem(newItem))
-        setMsg('');
+        dispatch(addItem(user.id, newItem))
+        // setMsg('');
         //if no name  don't close modal
-        if (item_status === 400) {
-          setModal(true)
-        } else {
-
-          setModal(false)
-        }
-
-        // set input to empty
-        setState({name: ''})
-    }
+          // if (add_item_status === 400) {
+          //   setModal(true);
+          //   setMsg(add_item_msg);
+          // } else {
+          //   setModal(false)
+          // }
+          // // close modal if status is 200
+          // if (add_item_status === 200 ) {
+          //   setModal(false)
+          // } 
+        
+        
+  }
      
 
     return (
@@ -98,16 +114,15 @@ const ItemModal = () => {
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
            
-        {item_msg ? <Alert color="danger"> {item_msg} </Alert> : null
-        }
+          { msg ? <Alert color="danger" >{msg}</Alert> : null }
         
-          <form onSubmit={onSubmit}>
+          <form onSubmit={ onSubmit}>
 
               <div className="form-group">
                   <label htmlFor="item" >Item</label>
                   <input className="form-control"
                       type="text"
-                      value={state.name}
+                      value={name}
                       name="name"
                       id="item"
                       placeholder="Add shopping item"

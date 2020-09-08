@@ -1,14 +1,17 @@
 
 import {GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING,
     DELETE_ERROR,
-    ITEM_ERROR} from '../actions/types';
+    ITEM_ERROR, ADD_ITEM_ERROR} from '../actions/types';
 
 const initialState  = {
     items: [],
     loading: false,
     item_msg: '',
+    add_item_msg: '',
     item_status: null,
-    item_id: null
+    add_item_status: null,
+    items_id: null,
+    item_others: null
 }
 
 export default function(state=initialState, action) {
@@ -16,26 +19,29 @@ export default function(state=initialState, action) {
         case GET_ITEMS: 
             return {
                 ...state,
-                items: action.payload,
+                items: action.payload.items,
+                items_id: action.payload.items_id,
+                item_others: action.payload.item_others,
                 loading: false
             } 
         case DELETE_ITEM:
             return {
                 ...state,
-                items: state.items.filter(item => item._id !== action.payload)
+                items: state.items.filter(item => item !== action.payload.name)
             } 
         case DELETE_ERROR: 
             return {
                 ...state,
                 item_msg: action.payload.item_msg,
                 item_status: action.payload.item_status,
-                item_id: action.payload.item_id
+                item_others: action.payload.item_others
             }
         case ADD_ITEM:
             return {
                 ...state,
-                items: [action.payload, ...state.items],
-                item_msg: ''
+                items: [action.payload.name, ...state.items],
+                add_item_status: action.payload.add_item_status
+              
             }  
         case ITEMS_LOADING:
             return {
@@ -47,8 +53,15 @@ export default function(state=initialState, action) {
                 ...state,
                 item_msg: action.payload.item_msg,
                 item_status: action.payload.item_status,
-                item_id: action.payload.item_id
-            }       
+                item_others: action.payload.item_others,
+                
+            } 
+        case ADD_ITEM_ERROR: 
+            return {
+                ...state,
+                add_item_msg: action.payload.add_item_msg,
+                add_item_status: action.payload.add_item_status
+            }      
         default: 
             return state;
     }

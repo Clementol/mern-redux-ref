@@ -2,17 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../actions/authActions";
 import Router from 'next/router'
-// import { Alert } from "../shoppingList";
+
 import { clearErrors } from "../actions/errorActions";
 
-
-// const Alert = ({msg}) => {
-//     return (
-//         <div className="alert alert-danger" > 
-//                 {msg}
-//             </div> 
-//     )
-// }
 
 const Login = () => {
     

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING, GET_ERRORS, 
-ITEM_ERROR, DELETE_ERROR
+ITEM_ERROR, DELETE_ERROR, ADD_ITEM_ERROR
 } from './types';
 
 import {tokenConfig} from './authActions'
@@ -10,47 +10,68 @@ const siteUrl = process.env.siteUrl
 
 /**
  * @description Get items from database
+ * @param id
 */
 
-export const getItems = () => dispatch => {
+export const getItems = (id) => async(dispatch, getState) => {
     dispatch(setItemsLoading());
-    axios
-        .get(`${siteUrl}/api/items`)
-        .then(res => dispatch({
+    await axios
+        .get(`${siteUrl}/api/${id}/items`, tokenConfig(getState))
+        .then(res => {
+            console.log('res' ,res.data)
+            const {items, _id, ...o} = res.data
+            console.log(id)
+            dispatch({
             type: GET_ITEMS,
-            payload: res.data
-        }))
+            payload: {
+                items: items.reverse(),
+                items_id: id,
+                items_others: o
+            }
+            }) 
+    } )
         .catch (err => {
             const {data, status, ...o}  = err.response;
-            //dispatch(itemErrors(data, status))
+            console.log(data)
             dispatch({
                 type: ITEM_ERROR,
                 payload: {
                     item_msg: data,
                     item_status: status,
-                    item_id: o
+                    item_others: o
                 }
             })
             
          
         })
 }
+/**
+ * @description Add item
+ * @param id
+ * @param item
+*/
+export const addItem = (id, item) => (dispatch, getState) => {
 
-export const addItem = item =>  (dispatch, getState) => {
-    axios.post(`${siteUrl}/api/add-item`, item, tokenConfig(getState))
-        .then(res => dispatch({
-             type: ADD_ITEM,
-             payload: res.data
-        }))
+    const name = JSON.stringify(item);
+    axios.post(`${siteUrl}/api/${id}/add-item`, name, tokenConfig(getState))
+        .then(res => { 
+                dispatch(getItems(id))
+                dispatch({
+                type: ADD_ITEM,
+                 payload: {
+                     name: res.data.name,
+                     add_item_status: res.status
+                 }
+                }) 
+            })
         .catch (err => {
             const {data, status, ...o}  = err.response;
             //dispatch(itemErrors(data, status))
             dispatch({
-                type: ITEM_ERROR,
+                type: ADD_ITEM_ERROR,
                 payload: {
-                    item_msg: data,
-                    item_status: status,
-                    item_id: o
+                    add_item_msg: data,
+                    add_item_status: status
                 }
             })
         })
@@ -59,15 +80,20 @@ export const addItem = item =>  (dispatch, getState) => {
 /**
  * @description delete item
  * @param id
+ * @param name
 */
-export const deleteItem = id => (dispatch, getState) => {
-    axios
-    .delete(`${siteUrl}/api/delete-item/${id}`, tokenConfig(getState))
-    .then(res => 
+export const deleteItem = (id, name) => (dispatch, getState) => {
+     axios
+    .delete(`${siteUrl}/api/delete-item/${id}/${name}`, tokenConfig(getState))
+    .then(res => {
+        console.log(res.status)
         dispatch({
-        type: DELETE_ITEM,
-        payload: id
-    }))
+            type: DELETE_ITEM,
+            payload: {
+                id, name
+            }
+        })
+    })
     .catch(err => {
         const {data, status, ...o} = err.response;
         dispatch({
@@ -75,7 +101,7 @@ export const deleteItem = id => (dispatch, getState) => {
             payload: {
                 item_msg: data,
                 item_status: status,
-                item_id: o
+                item_others: o
             }
         })
     })

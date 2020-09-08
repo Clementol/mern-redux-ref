@@ -10,8 +10,9 @@ export default handler
  * @access private
 */
 
-.get( (req, res) => {
-    User.findById(req.user.id)
+.get( async (req, res) => {
+    await User.findById(req.user.id)
         .select('-password')
-        .then(user => res.end(JSON.stringify( user)) )
+        .then(user => await res.end(JSON.stringify( user)) )
+        .catch(err => res.status(400).end(JSON.stringify(`Unable to get user ${err}`)))
 })

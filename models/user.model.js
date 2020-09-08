@@ -2,6 +2,9 @@ import * as  mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 
+//     name: {type: String, trim: true},
+//     date: {type: Date, default: Date.now}
+
 
 const UserSchema = new Schema({
     name: {
@@ -16,16 +19,19 @@ const UserSchema = new Schema({
         type: String, 
         required: true
     },
-    register_date: {
-        type: Date,
-        default: Date.now
+    // register_date: {
+    //     type: Date,
+    //     default: Date.now
       
-    }
+    // },
+    items: []
 },
-{
-    timestamps: true
-}
+
+    {
+        timestamps: true
+    }
 )
 
 export const User = mongoose.models.User || mongoose.model('User', UserSchema);
+// export const Item = mongoose.models.Item || mongoose.model('Item', ItemSchema)
 

@@ -16,12 +16,12 @@ import {
 /**
  * @description Check token & load user
  */
-export const loadUser = () => (dispatch, getState) => {
+export const loadUser = () => async (dispatch, getState) => {
     // User loading
     dispatch({type: USER_LOADING});
     
 
-    axios.get(`${siteUrl}/api/user`, tokenConfig(getState))
+    await axios.get(`${siteUrl}/api/user`, tokenConfig(getState))
         .then( res => dispatch({
             type: USER_LOADED,
             payload: res.data
@@ -42,7 +42,7 @@ export const loadUser = () => (dispatch, getState) => {
  * @description Regiter user 
  */
  
- export const register = ({name, email, password}) => dispatch => {
+ export const register = ({name, email, password}) => async dispatch => {
      // header
         const config = {
             headers: {
@@ -52,7 +52,7 @@ export const loadUser = () => (dispatch, getState) => {
      //Request body
      const body = JSON.stringify({name, email, password});
 
-     axios.post(`${siteUrl}/api/add-user`, body, config)
+     await axios.post(`${siteUrl}/api/add-user`, body, config)
         .then(res => dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
@@ -68,7 +68,7 @@ export const loadUser = () => (dispatch, getState) => {
 
 /**@description login */
 
-export const login = ({email, password}) => dispatch => {
+export const login = ({email, password}) => async dispatch => {
     // header
        const config = {
            headers: {
@@ -78,7 +78,7 @@ export const login = ({email, password}) => dispatch => {
     //Request body
     const body = JSON.stringify({email, password});
 
-    axios.post(`${siteUrl}/api/authenticate`, body, config)
+    await axios.post(`${siteUrl}/api/authenticate`, body, config)
        .then(res => dispatch({
            type: LOGIN_SUCCESS,
            payload: res.data

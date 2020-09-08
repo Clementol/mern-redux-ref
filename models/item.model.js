@@ -8,10 +8,8 @@ const  itemSchema = new Schema({
         required: [true, 'Please add name'],
         min: [3, 'Name must not be less than 3 characters']},
         date: {type: Date, required: true, default: Date.now
-    },
-
-
-   
+    }
+    
 },
     {
         timestamps: true

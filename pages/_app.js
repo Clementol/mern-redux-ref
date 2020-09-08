@@ -14,10 +14,10 @@ import { loadUser } from '../components/actions/authActions';
 // import client from '../utils/apollo';
 
 function MyApp({ Component, pageProps }) {
-    const {isAuthenticated} = useSelector(state => state.auth)
-    useEffect( () => {
-        isAuthenticated ? store.dispatch(loadUser()) : null
-    }, [isAuthenticated] )
+    // const {isAuthenticated} = useSelector(state => state.auth)
+    // useEffect( () => {
+    //     isAuthenticated ? store.dispatch(loadUser()) : null
+    // }, [isAuthenticated] )
     return (
         <Provider store={store}>
             <PersistGate persistor={persistor} loading={null}>
