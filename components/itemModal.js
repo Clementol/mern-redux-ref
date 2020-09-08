@@ -59,6 +59,7 @@ const ItemModal = () => {
     const toggle = () => {
       setModal(!modal)
       setMsg('')
+      setSuccessMsg()
       setName('')
      
     }
