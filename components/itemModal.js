@@ -5,15 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap'
 import Link from 'next/link';
 
-/**
- * @param {*} msg 
- */
-// const Alert = ({msg}) => {
-    
-//   return (
-//     <div className="alert alert-danger" >{msg}</div>
-//   )
-// }
 
 // Link to login page
 const LoginLink = (
@@ -31,6 +22,7 @@ const ItemModal = () => {
     const [name, setName] = useState('')
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState('');
+    const [success_msg, setSuccessMsg] = useState('');
 
     const dispatch = useDispatch();
 
@@ -46,7 +38,8 @@ const ItemModal = () => {
     
         }
         if (add_item_status === 200) {
-            setModal(false)
+            // setModal(false)
+            setSuccessMsg('Item Added')
         }
      
       }, [add_item_msg, add_item_status] )
@@ -77,6 +70,8 @@ const ItemModal = () => {
     const onSubmit = e => {
         e.preventDefault();
         setModal(true)
+        setMsg('')
+        setSuccessMsg('')
         const newItem = {
           name: name
         }
@@ -115,6 +110,7 @@ const ItemModal = () => {
         <ModalBody>
            
           { msg ? <Alert color="danger" >{msg}</Alert> : null }
+          { success_msg ? <Alert color="success" >{success_msg}</Alert> : null }
         
           <form onSubmit={ onSubmit}>
 
