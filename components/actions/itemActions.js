@@ -90,7 +90,7 @@ export const deleteItem = (id, name) => (dispatch, getState) => {
         dispatch({
             type: DELETE_ITEM,
             payload: {
-                id, name
+                id, name, item_status: res.status
             }
         })
     })

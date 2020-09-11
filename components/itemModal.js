@@ -7,9 +7,9 @@ import Link from 'next/link';
 
 
 // Link to login page
-const LoginLink = (
+export const LoginLink = (
     <h4>Please 
-        <Link href='/login'>
+        <Link href='/'>
           <a> login</a> 
         </Link> to manage items
     </h4>
@@ -23,26 +23,31 @@ const ItemModal = () => {
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState('');
     const [success_msg, setSuccessMsg] = useState('');
+    const [addingLoad, setAddingLoad] = useState(false)
 
     const dispatch = useDispatch();
 
     // Reducers
     const {isAuthenticated, user} = useSelector( state => state.auth )
-    const {add_item_msg, add_item_status} = useSelector( state => state.item )
+    // const {add_item_msg, add_item_status} = useSelector( state => state.item )
+    const {item} = useSelector( state => state )
 
     // Life cycle method
     useEffect( () => {
     
-        if (add_item_status === 400) {
-            setMsg(add_item_msg)
+        if ( item.add_item_status === 400) {
+            setMsg(item.add_item_msg)
+            setSuccessMsg('')
+            setAddingLoad(false)
     
         }
-        if (add_item_status === 200) {
-            // setModal(false)
-            setSuccessMsg('Item Added')
+        if (item.add_item_status === 200) {
+          setSuccessMsg('Item Added')
+          setMsg('')
+          setAddingLoad(false)
         }
      
-      }, [add_item_msg, add_item_status] )
+      }, [item] )
 
 
     
@@ -59,7 +64,8 @@ const ItemModal = () => {
     const toggle = () => {
       setModal(!modal)
       setMsg('')
-      setSuccessMsg()
+      setAddingLoad(false)
+      setSuccessMsg('')
       setName('')
      
     }
@@ -73,11 +79,13 @@ const ItemModal = () => {
         setModal(true)
         setMsg('')
         setSuccessMsg('')
+        setAddingLoad(true)
         const newItem = {
           name: name
         }
         //Add Item to list
         dispatch(addItem(user.id, newItem))
+
         // setMsg('');
         //if no name  don't close modal
           // if (add_item_status === 400) {
@@ -128,7 +136,8 @@ const ItemModal = () => {
                   <button 
                   style={{margin: '1rem', marginRight: '6rem'}}
                   type='submit'
-                  className="btn btn-primary" >Add Item</button>
+                  disabled={addingLoad}
+                  className="btn btn-primary" >{addingLoad ? 'Adding...' : "Add Item"}</button>
               </div>
           </form>      
 

@@ -1,0 +1,13 @@
+
+.bg {
+    background-image: url('../public/land_img.jpg')  ;
+    height: 100%;
+    width: 100%;    
+}
+
+.itemLength {
+    margin-bottom: 0.9rem;
+    color: green;
+    font-size: large;
+    font-weight: 600;
+}

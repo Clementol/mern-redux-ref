@@ -9,12 +9,12 @@ const Logout = () => {
 
     const onClick = () => {
         dispatch(logout())
-        Router.push('/login')
+        Router.push('/')
     }
 
     return (
         <div onClick={onClick } >
-            <Link href="" >
+            <Link href="/" >
                 <a className="nav-link"  >Logout</a>
             </Link>
         </div>

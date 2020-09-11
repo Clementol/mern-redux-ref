@@ -13,21 +13,36 @@ import { clearErrors } from './actions/errorActions';
  * @description display items
 */
 const Items = ({items_id, items}) => {
-    const {isAuthenticated} = useSelector( (state) => state.auth )
+
+    const [deletingLoad, setDeletingingLoad] = useState(false)
+
+    const {auth} = useSelector( (state) => state )
+    const {item} = useSelector( (state) => state )
     const dispatch = useDispatch()
-    
+
+    useEffect( () => {
+        if (item.item_status === 400 || 200) {
+            setDeletingingLoad(false)
+        }
+        
+    }, [item] )
+
+
     return (
         <>
-        <h6 style={{marginBottom: '0.9rem'}} >You have {items.length} item(s) </h6>
+        {deletingLoad ? <h6 style={{color: 'red'}} >deleting...</h6> : null }
+        <h6 className="itemLength" >You have {items.length} item(s) </h6>
         <ul className="list-group ">
                 { items ? items.map((name) => {
                     return <li key={name} className="list-group-item" >
 
-                        <button disabled={isAuthenticated === false} className="btn btn-danger small"
-                        style={{marginRight: '5rem'}}
-                        onClick={() => dispatch(deleteItem(items_id, name))}
+                        <button disabled={auth.isAuthenticated === false} className="btn btn-danger small"
+                        style={{marginRight: '2rem'}}
+                        onClick={ () => {   
+                            setDeletingingLoad(true)
+                            dispatch(deleteItem(items_id, name)) } }
                         >   
-                            Delete
+                             Delete
                         </button>
                         {name}</li>
                 }) : null}
@@ -44,19 +59,23 @@ const Items = ({items_id, items}) => {
 const ShoppingList = () => {
     const [err_msg, setMsg] = useState('')
 
-    const {loading, items, items_id, item_msg} = useSelector(state => state.item);
-    const {isAuthenticated, user} = useSelector(state => state.auth);
+    // const {loading, items, items_id, item_msg} = useSelector(state => state.item);
+    const {item} = useSelector(state => state);
+    const {auth} = useSelector(state => state);
+
     const dispatch = useDispatch();
     
 
     useEffect(() => {
-        item_msg ? setMsg(item_msg) : null
-        if (isAuthenticated) {
-            dispatch(getItems(user.id));
-            console.log('name',items)
+        if (item.item_status === 400) {
+            setMsg(item.item_msg)
+        }
+        if (auth.isAuthenticated) {
+            dispatch(getItems(auth.user.id));
+            // console.log('name', item.items)
             dispatch(clearErrors())
         }
-    }, [isAuthenticated, user, item_msg])
+    }, [auth])
 
         return (
             <div className="container">
@@ -68,10 +87,10 @@ const ShoppingList = () => {
                 
                 {
                      
-                isAuthenticated && loading ? (<div style={{textAlign: 'center'}}>
+                item.loading ? (<div style={{textAlign: 'center'}}>
                         <BeatLoader color={'blue'} size={45} margin={20}  />
                     </div>) :
-                <Items items_id={items_id} items={items} />
+                <Items items_id={item.items_id} items={item.items} />
                       
                 }
                

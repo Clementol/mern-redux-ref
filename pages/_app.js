@@ -3,7 +3,7 @@ import {Provider, useSelector} from 'react-redux'
 import {createWrapper} from 'next-redux-wrapper'
 import Layout from '../components/Layout';
 
-// import '../css/style.css'
+import '../style/style.css'
 
 
 import {store, persistor} from '../components/store';
@@ -21,9 +21,11 @@ function MyApp({ Component, pageProps }) {
     return (
         <Provider store={store}>
             <PersistGate persistor={persistor} loading={null}>
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+                <div className="bg">
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+                </div>
             </PersistGate>
         </Provider>
     )

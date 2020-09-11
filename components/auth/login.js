@@ -16,31 +16,28 @@ const Login = () => {
     const dispatch = useDispatch();
     
   
-    const {isAuthenticated} = useSelector(state => state.auth)
+    // const {isAuthenticated, user} = useSelector(state => state.auth)
+    const {auth} = useSelector(state => state)
     const {error} = useSelector(state => state) ;
     
     
 
     useEffect( () => {
-        //dispatch(clearErrors())
-
-        //if (error !== prevError) {
+       
             if ( error.id === 'LOGIN_FAIL') {
                 setMsg(error.msg)
                 setLoadButton(false)
             } else {
                 setMsg(null)
             }
-        //}
-        //if authenticated
         
-        if (isAuthenticated) {
-         Router.push('/')
+        if (auth.isAuthenticated) {
+         Router.push('/[name]', `/${auth.user.name}`)
             setEmail('');
-            setPassword('')
+            setPassword('');
         }
         
-    }, [error, isAuthenticated] )     
+    }, [error, auth] )     
    
 
     /**

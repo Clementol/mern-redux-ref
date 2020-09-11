@@ -10,14 +10,14 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [err_msg, setErrMsg] = useState('')
-    
+    const [loadButton, setLoadButton] = useState(false)
+
     const dispatch = useDispatch();
     
     
-    const {isAuthenticated} = useSelector(state => state.auth)
-    const {msg} = useSelector(state => state.error)
+    const {auth} = useSelector(state => state)
+    // const {msg} = useSelector(state => state.error)
     const {error} = useSelector(state => state)
-    const [loadButton, setLoadButton] = useState(false)
     
     
     useEffect( () => {
@@ -29,12 +29,14 @@ const Register = () => {
                 setErrMsg(null)
             }
 
-            if (isAuthenticated){
-                Router.push('/');
+            if (auth.isAuthenticated){
+                Router.push('/[name]', `/${auth.user.name}`);
+                setEmail('')
+                setPassword('')
            }
            
            //dispatch(clearErrors());
-    }, [error, isAuthenticated] )     
+    }, [error, auth] )     
    
 
     /**

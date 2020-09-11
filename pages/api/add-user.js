@@ -22,7 +22,7 @@ export default handler
         return res.status(400).end(JSON.stringify("pls enter all fields"))
                     
     }
-    User.findOne({email})
+    await User.findOne({email})
     .then(user => {
         if (user) return res.status(400).end(JSON.stringify('user already exits'))
         const newUser = new User({

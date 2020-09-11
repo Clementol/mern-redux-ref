@@ -27,7 +27,8 @@ export default function(state=initialState, action) {
         case DELETE_ITEM:
             return {
                 ...state,
-                items: state.items.filter(item => item !== action.payload.name)
+                items: state.items.filter(item => item !== action.payload.name),
+                item_status: action.payload.item_status
             } 
         case DELETE_ERROR: 
             return {
