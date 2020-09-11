@@ -6,7 +6,7 @@ export default handler
 .use(auth)
 /**
  * @routes GET /api/authenticate/user
- * @description Auth user
+ * @description Auth use
  * @access private
 */
 
