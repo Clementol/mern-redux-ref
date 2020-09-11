@@ -78,7 +78,7 @@ const ShoppingList = () => {
     }, [auth])
 
         return (
-            <div className="container">
+            <div className="">
                 <ItemModal />
               
                 {
