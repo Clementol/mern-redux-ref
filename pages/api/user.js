@@ -13,6 +13,6 @@ export default handler
 .get( async (req, res) => {
     User.findById(req.user.id)
         .select('-password')
-        .then(user => await res.end(JSON.stringify( user)) )
+        .then(user => res.end(JSON.stringify( user)) )
         .catch(err => res.status(400).end(JSON.stringify(`Unable to get user ${err}`)))
 })
