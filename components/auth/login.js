@@ -84,8 +84,8 @@ const Login = () => {
                 </div>
             </div>
 
-            <div className="form-group row" style={{margin: '3rem'}}>
-                <button className="btn btn-primary">
+            <div className="form-group row" >
+                <button className="btn btn-primary" style={{marginLeft: '7.5rem' }}>
                     { loadButton === true &&
                         <span><i className="fa fa-spinner fa-spin"></i> &nbsp; </span> 
                     

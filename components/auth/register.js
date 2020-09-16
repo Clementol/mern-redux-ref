@@ -105,7 +105,7 @@ const Register = () => {
             </div>
 
             <div className="form-group row" style={{margin: '3rem'}}>
-                <button className="btn btn-primary">
+                <button className="btn btn-primary"style={{marginLeft: '4.5rem' }}>
                 { loadButton  && 
                       <span> <i className="fa fa-spinner fa-spin"></i> &nbsp;</span>
                     

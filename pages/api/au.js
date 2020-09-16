@@ -4,7 +4,10 @@ import {User} from '../../models/user.model';
 
 import handler from '../../handler';
 
-const jwtsecret = process.env.jwtSecret
+const jwtsecret = process.env.jwtSecret;
+
+
+
 /**
  * @routes /api/users
  * @description Register new users

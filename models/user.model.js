@@ -2,10 +2,6 @@ import * as  mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 
-//     name: {type: String, trim: true},
-//     date: {type: Date, default: Date.now}
-
-
 const UserSchema = new Schema({
     name: {
         type: String,
@@ -19,11 +15,10 @@ const UserSchema = new Schema({
         type: String, 
         required: true
     },
-    // register_date: {
-    //     type: Date,
-    //     default: Date.now
-      
-    // },
+    confirmed: {
+        type: Boolean,
+        default: false 
+    },
     items: []
 },
 
