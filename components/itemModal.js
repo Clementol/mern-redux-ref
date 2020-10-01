@@ -28,7 +28,7 @@ const ItemModal = () => {
     const dispatch = useDispatch();
 
     // Reducers
-    const {isAuthenticated, user} = useSelector( state => state.auth )
+    const {auth} = useSelector( state => state )
     // const {add_item_msg, add_item_status} = useSelector( state => state.item )
     const {item} = useSelector( state => state )
 
@@ -84,7 +84,7 @@ const ItemModal = () => {
           name: name
         }
         //Add Item to list
-        dispatch(addItem(user.id, newItem))
+        dispatch(addItem(auth.user.id, newItem))
 
         // setMsg('');
         //if no name  don't close modal
@@ -107,7 +107,7 @@ const ItemModal = () => {
         <div style={{margin: '2rem'}}>
           <>
            {
-             isAuthenticated ?
+             auth.isAuthenticated ?
              <Button color="primary" onClick={toggle}>Add Item</Button>
                 : LoginLink
            }

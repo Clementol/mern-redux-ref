@@ -29,11 +29,11 @@ export default handler
         User.findOne({email})
         .then(user => {
             if (!user) {
-                return res.status(400).end(JSON.stringify('User does not exits'))
+                return res.status(401).end(JSON.stringify('User does not exits!'))
             }
             
             if (!user.confirmed) {
-                throw new Error("Please confirm your email to login")
+                return res.status(401).end(JSON.stringify('Your account has not been verified!'))
             }
             // Valdate password
             bcrypt.compare(password, user.password)
@@ -51,7 +51,8 @@ export default handler
                                 user: {
                                     id: user.id,
                                     name: user.name,
-                                    email: user.email
+                                    email: user.email,
+                                    confirmed: user.confirmed
                                 }
                             })
                         }

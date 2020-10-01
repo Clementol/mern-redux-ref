@@ -1,4 +1,4 @@
-import { GET_ERRORS, CLEAR_ERRORS } from "./types";
+import { GET_ERRORS, CLEAR_ERRORS, REGISTRATION_CONFIRMATION_FAILED } from "./types";
 
 /**
  * 
@@ -10,6 +10,19 @@ import { GET_ERRORS, CLEAR_ERRORS } from "./types";
 export const returnErrors = (msg, status, id=null) => {
     return {
         type: GET_ERRORS,
+        payload: {msg, status, id}
+    }
+}
+/**
+ * 
+ * @param  msg 
+ * @param  status 
+ * @param id 
+ */
+
+export const returnConfirmatonError = (msg, status, id=null) => {
+    return {
+        type: REGISTRATION_CONFIRMATION_FAILED,
         payload: {msg, status, id}
     }
 }

@@ -18,9 +18,9 @@ export const getItems = (id) => async(dispatch, getState) => {
     await axios
         .get(`${siteUrl}/api/${id}/items`, tokenConfig(getState))
         .then(res => {
-            console.log('res' ,res.data)
+            //console.log('res' ,res.data)
             const {items, _id, ...o} = res.data
-            console.log(id)
+            //console.log(id)
             dispatch({
             type: GET_ITEMS,
             payload: {
@@ -32,7 +32,7 @@ export const getItems = (id) => async(dispatch, getState) => {
     } )
         .catch (err => {
             const {data, status, ...o}  = err.response;
-            console.log(data)
+            // console.log(data)
             dispatch({
                 type: ITEM_ERROR,
                 payload: {
@@ -86,7 +86,7 @@ export const deleteItem = (id, name) => (dispatch, getState) => {
      axios
     .delete(`${siteUrl}/api/delete-item/${id}/${name}`, tokenConfig(getState))
     .then(res => {
-        console.log(res.status)
+        // console.log(res.status)
         dispatch({
             type: DELETE_ITEM,
             payload: {

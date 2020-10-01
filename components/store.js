@@ -15,7 +15,7 @@ const persistConfig = {
     key: 'auth',
     storage: storage,
     whilelist: ['auth'],
-    blacklist: ['error', 'item']
+    blacklist: ['error', 'item', 'message']
 }
 
 const pReducer = persistReducer(persistConfig, rootReducer)

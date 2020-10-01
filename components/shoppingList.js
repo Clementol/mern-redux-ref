@@ -36,7 +36,7 @@ const Items = ({items_id, items}) => {
                 { items ? items.map((name) => {
                     return <li key={name} className="list-group-item" >
 
-                        <button disabled={auth.isAuthenticated === false} className="btn btn-danger small"
+                        <button disabled={auth.confirmed === false} className="btn btn-danger small"
                         style={{marginRight: '2rem'}}
                         onClick={ () => {   
                             setDeletingingLoad(true)
@@ -59,7 +59,6 @@ const Items = ({items_id, items}) => {
 const ShoppingList = () => {
     const [err_msg, setMsg] = useState('')
 
-    // const {loading, items, items_id, item_msg} = useSelector(state => state.item);
     const {item} = useSelector(state => state);
     const {auth} = useSelector(state => state);
 
@@ -70,7 +69,7 @@ const ShoppingList = () => {
         if (item.item_status === 400) {
             setMsg(item.item_msg)
         }
-        if (auth.isAuthenticated) {
+        if (auth.confirmed && auth.isAuthenticated) {
             dispatch(getItems(auth.user.id));
             // console.log('name', item.items)
             dispatch(clearErrors())

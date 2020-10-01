@@ -12,7 +12,7 @@ const GuestLink = () => {
               </Link>
             </li>
             <li className="nav-item ">
-              <Link href='/' >
+              <Link as="/login" href='/' >
                 <a className="nav-link" >Login</a>
               </Link>
             </li>

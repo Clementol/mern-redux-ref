@@ -15,7 +15,7 @@ const Logout = () => {
     return (
         <div onClick={onClick } >
             <Link href="/" >
-                <a className="nav-link"  >Logout</a>
+                <a className="nav-link">Logout</a>
             </Link>
         </div>
     )

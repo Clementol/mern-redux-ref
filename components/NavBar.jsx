@@ -9,7 +9,7 @@ import GuestLink from './guestLink'
 
 const NavBar = () => {
 
-    const {isAuthenticated} = useSelector( state => state.auth )
+    const {confirmed} = useSelector( state => state.auth )
 
     const refresh = () => {
       window.location = '/'
@@ -28,7 +28,7 @@ const NavBar = () => {
             
           <ul className="navbar-nav mr-auto">
             {
-              isAuthenticated ?  <AuthLink />  :  <GuestLink />
+              confirmed ?  <AuthLink />  :  <GuestLink />
             }
            
           </ul>

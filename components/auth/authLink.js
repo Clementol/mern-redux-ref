@@ -4,17 +4,17 @@ import { useEffect } from "react";
 
 
 const AuthLink = () => {
-    const {user} = useSelector( (state) => state.auth )
+    const {auth} = useSelector( (state) => state )
     
     useEffect( () => {
-        if (user) user.name
-    }, [user])
+        //if (user) user.name
+    }, [])
     return (
         <>
-            {    user && 
+            {    auth.isAuthenticated & auth.confirmed &&
                
                 <li className="nav-item ">
-                    <strong  style={{color: 'white'}} >Welcome, {user.name} </strong>
+                    <strong  style={{color: 'white'}} >Welcome, {auth.user.name} </strong>
                 </li>
                 }
                

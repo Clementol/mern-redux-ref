@@ -14,7 +14,7 @@ import { LoginLink } from '../components/itemModal';
             <title>{router.query.name}'s Items</title>
         </Head>
         <div className="container">
-          { auth.isAuthenticated ? <ShoppingList /> : LoginLink }
+          { auth.confirmed && auth.isAuthenticated ? <ShoppingList /> : LoginLink }
         </div>
     </>
   )
