@@ -59,9 +59,9 @@ const ResetPassword = () => {
     <form onSubmit={onsubmit}>
 
         <div className="form-group row" >
-            <label htmlFor="password" className="col-sm-2" style={{fontWeight: 'bold'}}>Password</label>
+            <label htmlFor="password" className="col-sm-2" style={{fontWeight: 'bold'}}>New Password</label>
             <div className="col-sm-8">
-                <input type="password" placeholder="password"
+                <input type="password" placeholder="New Password"
                 className="form-control" id="password" name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -71,9 +71,9 @@ const ResetPassword = () => {
 
         
         <div className="form-group row">
-            <label htmlFor="reTypePassword" className="col-sm-2 col-form-label" style={{fontWeight: 'bold'}}>Confirm Password</label>
+            <label htmlFor="reTypePassword" className="col-sm-2 col-form-label" style={{fontWeight: 'bold'}}>Confirm New Password</label>
             <div className="col-sm-8">
-                <input type="password" placeholder="confirm pasword" 
+                <input type="password" placeholder="Confirm New Pasword" 
                 className="form-control" id="reTypePassword" name="reTypePassword"
                 value={reTypePassword}
                 onChange={(e) => setRetypePassword(e.target.value)}

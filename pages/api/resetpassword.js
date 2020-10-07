@@ -20,6 +20,9 @@ export default handler
         if (!token) {
             return res.status(400).end(JSON.stringify("Your token was not found!"))  
         }
+        if (!password) {
+            return res.status(400).end(JSON.stringify("Please input your password"))  
+        }
         if (password !== reTypePassword) {
             return res.status(400).end(JSON.stringify("Please make sure the passwords correspond"))  
         }
