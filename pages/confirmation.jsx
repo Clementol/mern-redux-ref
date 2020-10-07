@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import Link from 'next/link'
 import { confirmation } from "../components/actions/authActions"
+import Head from "next/head"
 
 
 export const LoginLink = (
@@ -16,6 +17,8 @@ const EmailConfirmation = () => {
     const [succMsg, setSuccMsg] = useState('')
     const [errMsg, setErrMsg] = useState('')
     const [loadButton, setLoadButton] = useState(false)
+    const [notVerified, setNotVerified] = useState(false)
+
 
     const dispatch = useDispatch()
     const {message, auth} = useSelector(state => state)
@@ -39,6 +42,7 @@ const EmailConfirmation = () => {
         e.preventDefault();
         setLoadButton(true);
         setErrMsg('');
+        setNotVerified(false);
         setSuccMsg('');
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -50,18 +54,22 @@ const EmailConfirmation = () => {
         }
 
         // To confirm user
-        dispatch(confirmation(info))
+        dispatch(confirmation(info));
 
     }
 
     return (
+        <>
+        <Head>
+            <title>Password Confirmation</title>
+        </Head>
         <div style={{margin: "3rem"}} >
 
         {errMsg && <div className="alert alert-danger" > {errMsg} </div> }
 
-        {succMsg &&  <div className="alert alert-succcess" > {succMsg }</div> }
+        {succMsg &&  <div className="alert alert-succcess"> {succMsg }</div> }
 
-        { auth?.confirmed && <div className="confirmed" >
+        { auth.confirmed === true && <div className="confirmed" >
             <img  src="/confirmed.png" className="img-fluid" style={{borderRadius: '100%'}}
             alt="confirmed" width='100px' height='100px' />
             <h5>Please log in {LoginLink} </h5> 
@@ -83,14 +91,16 @@ const EmailConfirmation = () => {
                     />
                 </div>
             </div>
-            <div className="form-group row" style={{width: '30%', position: 'relative', margin: '2.5rem 0rem 2.5rem 9rem'}}>
-                <button className="btn btn-primary" style={{width: '9rem'}} disabled={loadButton | auth?.confirmed}>
-                    { loadButton  && <span> <i className="fa fa-spinner fa-spin"></i> &nbsp; Confirming </span>} 
-                    {auth?.confirmed ? 'Confirmed' : 'Confirm'}
+            <div className="form-group row" style={{ position: 'relative', margin: '2.5rem 0rem 2.5rem 9rem'}}>
+                <button className="btn btn-primary" style={{width: '13rem'}} disabled={loadButton | auth.confirmed == true}>
+                    { loadButton  && <span> <i className="fa fa-spinner fa-spin"></i> </span>} 
+                    {auth.confirmed == true ? 'Comfirmed' : 'Confirm'}
+                     
                 </button>
             </div>
             </form>
         </div>
+        </>
     )
 }
 

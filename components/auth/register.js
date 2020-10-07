@@ -118,9 +118,9 @@ const Register = () => {
             </div>
             <div className="form-group row">
                 <label htmlFor="reTypePassword" className="col-sm-2 col-form-label"
-                style={{fontWeight: "bold"}}>Retype Password</label>
+                style={{fontWeight: "bold"}}>Confirm Password</label>
                 <div className="col-sm-8">
-                    <input type="password" placeholder="reTypePassword" 
+                    <input type="password" placeholder="confirm password" 
                     className="form-control" id="reTypePassword" name="reTypePassword"
                     value={reTypePassword}
                     onChange={(e) => setRetypePassword(e.target.value)}

@@ -10,9 +10,6 @@ export default handler
     
     .post( async (req, res) => {
         await connectToDb()
-        // const queryString = window.location.search;
-        // const urlParams = new URLSearchParams(queryString);
-        // const token = urlParams.get('token');
         const { email, token } = req.body
         
         if (!token) {

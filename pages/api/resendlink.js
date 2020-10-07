@@ -17,17 +17,17 @@ export default handler
         const { email } = req.body
     
         if (!email) {
-            return res.status(400).end(JSON.stringify("please enter email in the field"))  
+            return res.status(400).end(JSON.stringify({msg: "please enter email in the field", id: ''}))  
         }
 
         User.findOne({email})
         .then(user => {
             if (!user) {
-                res.status(400).end(JSON.stringify('We were unable to find a user with that email.') );
+                res.status(400).end(JSON.stringify({msg: 'We were unable to find a user with that email.', id: ''}) );
             }
 
             if (user.confirmed) {
-                res.status(400).end('This account has already been verified. Please log in.');
+                res.status(400).end({msg: 'This account has already been verified. Please log in.', id: 'VERIVIED'});
             }
 
             const userToken  = new Token({
@@ -45,7 +45,7 @@ export default handler
                     res.status(200).end(JSON.stringify(msg))
                 })
                 .catch(err => {
-                    res.status(400).end(JSON.stringify(err))
+                    res.status(400).end(JSON.stringify({msg: err, id: ''}))
                 })
             })
         })

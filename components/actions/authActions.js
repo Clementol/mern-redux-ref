@@ -13,9 +13,9 @@ import {
     REGISTER_FAIL,
     LOGOUT_SUCCESS,
     REGISTRATION_CONFIRMED,
-    REGISTRATION_CONFIRMATION_FAILED
+    // REGISTRATION_CONFIRMATION_FAILED
 } from './types';
-
+    
 
 /**
  * @description Check token & load user
@@ -228,7 +228,7 @@ export const resendLink = ({email}) => dispatch => {
     .catch(err => {
         if (err.response) {
             const {data, status} = err.response;
-            dispatch(returnErrors(data, status))
+            dispatch(returnErrors(data.msg, status, data.id))
         }
     })
 }

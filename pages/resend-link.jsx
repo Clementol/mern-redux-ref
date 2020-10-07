@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import Link from "next/link"
-import { resendLink } from "../components/actions/authActions"
+import Link from "next/link";
+import { resendLink } from "../components/actions/authActions";
+import Head from "next/head";
+import { LoginLink } from "./confirmation";
 
 
 export const ResendLink = (
@@ -15,13 +17,17 @@ const Resend = () => {
     const [email, setEmail] = useState('')
     const [succMsg, setSuccMsg] = useState('')
     const [errMsg, setErrMsg] = useState('')
-    const [loadButton, setLoadButton] = useState(false)
+    const [loadButton, setLoadButton] = useState(false);
+    const [verified, setVerified] = useState(false);
 
     const dispatch = useDispatch()
     const {message, auth} = useSelector(state => state)
     const {error} = useSelector(state => state)
 
     useEffect(() => {
+        if (error.id === 'VERIVIED') {
+            setVerified(true);
+        }
         if (message.status === 200) {
             setSuccMsg(message.msg)
             setErrMsg('')
@@ -50,7 +56,18 @@ const Resend = () => {
 
     }
     return (
+        <>
+        <Head>
+            <title>Resend Link</title>
+        </Head>
         <div style={{margin: "3rem"}} >
+
+                {verified &&  <> <div className="alert alert-success" >You have been Verified.</div>
+                 <h5>Click {LoginLink} to login</h5>
+                 </>
+                }
+
+
                 {errMsg && <div className="alert alert-danger" >{errMsg}</div> }
 
                 {succMsg && <div className="alert alert-success" >{succMsg}</div> }
@@ -70,7 +87,7 @@ const Resend = () => {
 
 
             <div className="form-group row" style={{width: '30%', position: 'relative', margin: '2.5rem 0rem 2.5rem 9rem'}} >
-                <button className="btn btn-primary" style={{width: '8rem'}} disabled={loadButton}>
+                <button className="btn btn-primary" style={{width: '8rem'}} disabled={loadButton | auth.confirmed}>
                     { loadButton === true && <span><i className="fa fa-spinner fa-spin"></i> </span> } 
                     {loadButton ? "" : 'Resend Link'}
                 </button>
@@ -78,6 +95,7 @@ const Resend = () => {
              
         </form>
         </div>
+        </>
     )
 }
 
