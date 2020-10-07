@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
+import { forgetPassword } from "../components/actions/authActions";
 
 export const ForgotPasswordLink = (
     <Link href='/forget-password'>
@@ -39,7 +40,7 @@ const ForgetPassword = () => {
         const info = {
             email
         }
-
+        
         dispatch(forgetPassword({info}));
     }
 
