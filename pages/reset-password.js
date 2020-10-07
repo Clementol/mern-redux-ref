@@ -18,7 +18,9 @@ const ResetPassword = () => {
         if (message.status === 200 ) {
             setSuccMsg(message.msg)
             setLoadButton(false)
-            setErrMsg('')
+            setErrMsg('');
+            setPassword('');
+            setRetypePassword('');
         }
         if (error.status === 400) {
             setErrMsg(error.msg)

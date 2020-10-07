@@ -29,10 +29,11 @@ export const sendForgetPasswordMail = (userEmail, token) => {
             subject: "Password Reset",
             html: `<p>Your request to reset password.</p><br>
                     <b>The link below is valid for 10 minutes.</b>
-                  <p>To reset password, click <a href="${process.env.siteUrl}/resetpassword?token=${token}">here</a>.</p>  `
+                  <p>To reset password, click <a href="${process.env.siteUrl}/reset-password?token=${token}">here</a>.</p>  `
             },
             (err, info) => {
                 if (err) {
+                    console.log(err)
                     reject("Email not sent!")
                     return
                 }
