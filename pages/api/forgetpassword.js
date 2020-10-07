@@ -13,7 +13,9 @@ export default handler
     .post( async (req, res) => {
         await connectToDb();
         const {email} = req.body;
-
+        if (!email) {
+            return res.status(400).end(JSON.stringify({msg: "please enter email in the field", id: ''}))  
+        }
         User.findOne({email})
         .then( user =>  {
             if (!user) {
