@@ -39,7 +39,7 @@ const Login = () => {
             }
         
         if (auth.isAuthenticated && auth.confirmed) {
-           
+            setMsg('');
             // Concatenate spaced name with '-'
             let userName = auth.user.name
             let rUserName
