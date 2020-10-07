@@ -14,7 +14,7 @@ export default handler
         await connectToDb();
         const {email} = req.body;
         if (!email) {
-            return res.status(400).end(JSON.stringify({msg: "please enter email in the field", id: ''}))  
+            return res.status(400).end(JSON.stringify("please enter email in the field"))  
         }
         User.findOne({email})
         .then( user =>  {
