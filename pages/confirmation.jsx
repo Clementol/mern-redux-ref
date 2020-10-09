@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import Link from 'next/link'
 import { confirmation } from "../components/actions/authActions"
 import Head from "next/head"
+import { ResendLink } from "./resend-link"
 
 
 export const LoginLink = (
@@ -65,15 +66,17 @@ const EmailConfirmation = () => {
         </Head>
         <div style={{margin: "3rem"}} >
 
-        {errMsg && <div className="alert alert-danger" > {errMsg} </div> }
+        {errMsg && <> <div className="alert alert-danger" > {errMsg} </div> 
+        <h5>Please click {ResendLink} resend link </h5> 
+        </>}
 
-        {succMsg &&  <div className="alert alert-succcess"> {succMsg }</div> }
+        {succMsg &&  <div className="alert alert-success"> {succMsg }</div> }
 
-        { auth.confirmed === true && <div className="confirmed" >
+        { succMsg ? <div className="confirmed" >
             <img  src="/confirmed.png" className="img-fluid" style={{borderRadius: '100%'}}
             alt="confirmed" width='100px' height='100px' />
             <h5>Please log in {LoginLink} </h5> 
-        </div>}
+        </div> : ''}
            
 
 
@@ -92,7 +95,7 @@ const EmailConfirmation = () => {
                 </div>
             </div>
             <div className="form-group row" style={{ position: 'relative', margin: '2.5rem 0rem 2.5rem 9rem'}}>
-                <button className="btn btn-primary" style={{width: '13rem'}} disabled={loadButton | auth.confirmed == true}>
+                <button className="btn btn-primary" style={{width: '13rem'}} disabled={loadButton}>
                     { loadButton  && <span> <i className="fa fa-spinner fa-spin"></i> </span>} 
                     {auth.confirmed == true ? 'Comfirmed' : 'Confirm'}
                      

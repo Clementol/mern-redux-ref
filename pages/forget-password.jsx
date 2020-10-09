@@ -27,7 +27,7 @@ const ForgetPassword = () => {
         if (error.status === 400) {
             setErrMsg(error.msg)
             setLoadButton(false)
-            //setSuccMsg('')
+            setSuccMsg('')
         }
     }, [message, error] )
 

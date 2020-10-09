@@ -35,7 +35,7 @@ export default handler
     await connectToDb();
     await User.findOne({email})
     .then(user => {
-        if (user) return res.status(400).end(JSON.stringify('user already exits'))
+        if (user) return res.status(400).end(JSON.stringify('user already exits!'))
         
         const newUser = new User({
             name: name,
@@ -96,13 +96,3 @@ export default handler
     })
 
 })
-
-
-
-// let promise = new Promise((resolve, reject) => {
-//     setTimeout(() => resolve(("Whoops!")), 1000);
-//   });
-
-//   promise
-//   .then(res => console.log(res))
-//   .catch( err => console.log(err))

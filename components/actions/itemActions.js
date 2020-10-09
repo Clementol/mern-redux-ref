@@ -16,35 +16,40 @@ const siteUrl = process.env.siteUrl
 export const getItems = (id) => async(dispatch, getState) => {
     dispatch(setItemsLoading());
     await axios
-        .get(`${siteUrl}/api/${id}/items`, tokenConfig(getState))
-        .then(res => {
-            //console.log('res' ,res.data)
-            const {items, _id, ...o} = res.data
-            //console.log(id)
-            dispatch({
-            type: GET_ITEMS,
-            payload: {
-                items: items.reverse(),
-                items_id: id,
-                items_others: o
-            }
-            }) 
-    } )
-        .catch (err => {
-            const {data, status, ...o}  = err.response;
-            // console.log(data)
-            dispatch({
-                type: ITEM_ERROR,
+    .get(`${siteUrl}/api/${id}/items`, tokenConfig(getState))
+    .then(res => {
+        if (res.data) {
+
+                const {items, _id, ...o} = res.data
+                
+                dispatch({
+                type: GET_ITEMS,
                 payload: {
-                    item_msg: data,
-                    item_status: status,
-                    item_others: o
+                    items: items.reverse(),
+                    items_id: id,
+                    items_others: o
                 }
-            })
+                }) 
+            }
+         } )
+        .catch (err => {
+            if (err.response) {
+
+                const {data, status, ...o}  = err.response;
+                // console.log(data)
+                dispatch({
+                    type: ITEM_ERROR,
+                    payload: {
+                        item_msg: data,
+                        item_status: status,
+                        item_others: o
+                    }
+                })
+            }
             
-         
         })
 }
+
 /**
  * @description Add item
  * @param id
@@ -55,6 +60,8 @@ export const addItem = (id, item) => (dispatch, getState) => {
     const name = JSON.stringify(item);
     axios.post(`${siteUrl}/api/${id}/add-item`, name, tokenConfig(getState))
         .then(res => { 
+            if (res.data) {
+
                 dispatch(getItems(id))
                 dispatch({
                 type: ADD_ITEM,
@@ -63,17 +70,21 @@ export const addItem = (id, item) => (dispatch, getState) => {
                      add_item_status: res.status
                  }
                 }) 
-            })
+            }
+        })
         .catch (err => {
-            const {data, status, ...o}  = err.response;
-            //dispatch(itemErrors(data, status))
-            dispatch({
-                type: ADD_ITEM_ERROR,
-                payload: {
-                    add_item_msg: data,
-                    add_item_status: status
-                }
-            })
+            if (err.response) {
+
+                const {data, status, ...o}  = err.response;
+                //dispatch(itemErrors(data, status))
+                dispatch({
+                    type: ADD_ITEM_ERROR,
+                    payload: {
+                        add_item_msg: data,
+                        add_item_status: status
+                    }
+                })
+            }
         })
 }
 

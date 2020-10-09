@@ -44,6 +44,7 @@ const Resend = () => {
     const onsubmit = (e) => {
         e.preventDefault();
         setLoadButton(true);
+        setVerified(false);
         setErrMsg('');
         setSuccMsg('');
 
@@ -62,13 +63,13 @@ const Resend = () => {
         </Head>
         <div style={{margin: "3rem"}} >
 
-                {verified &&  <> <div className="alert alert-success" >You have been Verified.</div>
+                {verified &&  <> <div className="alert alert-success" >{errMsg}</div>
                  <h5>Click {LoginLink} to login</h5>
                  </>
                 }
 
 
-                {errMsg && <div className="alert alert-danger" >{errMsg}</div> }
+                {errMsg & error.id !== 'VERIVIED'  && <div className="alert alert-danger" >{errMsg}</div> }
 
                 {succMsg && <div className="alert alert-success" >{succMsg}</div> }
 
@@ -87,7 +88,7 @@ const Resend = () => {
 
 
             <div className="form-group row" style={{width: '30%', position: 'relative', margin: '2.5rem 0rem 2.5rem 9rem'}} >
-                <button className="btn btn-primary" style={{width: '8rem'}} disabled={loadButton | auth.confirmed}>
+                <button className="btn btn-primary" style={{width: '8rem'}} disabled={loadButton }>
                     { loadButton === true && <span><i className="fa fa-spinner fa-spin"></i> </span> } 
                     {loadButton ? "" : 'Resend Link'}
                 </button>

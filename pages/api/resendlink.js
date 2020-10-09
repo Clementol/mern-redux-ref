@@ -27,7 +27,7 @@ export default handler
             }
 
             if (user.confirmed) {
-                res.status(400).end({msg: 'This account has already been verified. Please log in.', id: 'VERIVIED'});
+                res.status(400).end(JSON.stringify({msg: 'This account has already been verified. Please log in.', id: 'VERIVIED'}));
             }
 
             const userToken  = new Token({
@@ -40,13 +40,16 @@ export default handler
                 }
 
                 // To send email to user registering
-                sendRegistrationMail(email, userToken.token)
-                .then( msg =>  {
-                    res.status(200).end(JSON.stringify(msg))
-                })
-                .catch(err => {
-                    res.status(400).end(JSON.stringify({msg: err, id: ''}))
-                })
+                if (!user.confirmed) {
+                    sendRegistrationMail(email, userToken.token)
+                    .then( msg =>  {
+                        res.status(200).end(JSON.stringify(msg))
+                    })
+                    .catch(err => {
+                        res.status(400).end(JSON.stringify({msg: err, id: ''}))
+                    })
+                }
+                
             })
         })
         .catch(e => {
@@ -54,3 +57,4 @@ export default handler
         })
 
 })
+console.log('')

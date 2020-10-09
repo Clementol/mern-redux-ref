@@ -7,6 +7,7 @@ import {
     REGISTER_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
+    REGISTRATION_CONFIRMED,
     REGISTRATION_CONFIRMATION_FAILED
 } from '../actions/types'
 
@@ -43,6 +44,12 @@ export default function(state=initialState, action) {
                 user: action.payload.user
             }
         case REGISTER_SUCCESS:
+            return {
+                ...state,
+                confirmed: action.payload.confirmed,
+                isLoading: false
+            }
+        case REGISTRATION_CONFIRMED:
             return {
                 ...state,
                 confirmed: action.payload.confirmed,

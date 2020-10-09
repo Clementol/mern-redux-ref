@@ -52,6 +52,7 @@ export default function(state=initialState, action) {
         case ITEM_ERROR:
             return {
                 ...state,
+                loading: false,
                 item_msg: action.payload.item_msg,
                 item_status: action.payload.item_status,
                 item_others: action.payload.item_others,

@@ -29,13 +29,12 @@ const ItemModal = () => {
 
     // Reducers
     const {auth} = useSelector( state => state )
-    // const {add_item_msg, add_item_status} = useSelector( state => state.item )
     const {item} = useSelector( state => state )
 
     // Life cycle method
     useEffect( () => {
     
-        if ( item.add_item_status === 400) {
+        if ( item.add_item_status === 400 | 500) {
             setMsg(item.add_item_msg)
             setSuccessMsg('')
             setAddingLoad(false)
